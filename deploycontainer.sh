@@ -181,6 +181,12 @@ deploy_red_black () {
         ${EXT_DIR}/utilities/sendMessage.sh -l bad -m "Failed to cleanup previous deployments after deployment of ${MY_CONTAINER_NAME}. $(get_error_info)"
         exit $RESULT
     fi
+
+    # Check to see if there is an override to keep the instance private
+    if [ $EXPOSE_PUBLIC -ne 1 ]; then
+        return 0
+    fi
+
     # if we alredy discoved the floating IP in clean(), then we assign it to FLOATING_IP.
     if [ -n "${DISCOVERED_FLOATING_IP}" ]; then
         FLOATING_IP=$DISCOVERED_FLOATING_IP
@@ -370,6 +376,11 @@ else
     else
         export MEMORY="--memory $RET_MEMORY"
     fi
+fi
+
+# assign public ip?
+if [ -z "$EXPOSE_PUBLIC" ]; then
+    export EXPOSE_PUBLIC=1
 fi
 
 # set current version
