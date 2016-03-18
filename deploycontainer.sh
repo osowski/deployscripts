@@ -187,7 +187,7 @@ deploy_red_black () {
     fi
 
     # Check to see if there is an override to keep the instance private
-    if [ $EXPOSE_PUBLIC -ne 1 ]; then
+    if [ ${EXPOSE_PUBLIC} -ne 1 ]; then
         return 0
     fi
 
@@ -490,7 +490,7 @@ else
 fi
 
 # assign public ip?
-if [ -z "$EXPOSE_PUBLIC" ]; then
+if [ -z "${EXPOSE_PUBLIC}" ]; then
     export EXPOSE_PUBLIC=1
 fi
 
